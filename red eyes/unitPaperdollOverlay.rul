@@ -1,0 +1,97 @@
+## unitPaperdollOverlay
+
+# Name: anim_frame                                        int
+# Name: battle_game                             ptr       BattleGame
+# Name: movement_type_fly                                 int       1
+# Name: movement_type_slide                               int       2
+# Name: movement_type_walk                                int       0
+# Name: null                                              null
+# Name: overlay                                 ptre      SpriteOverlay
+# Name: rules                                   ptr       RuleMod
+# Name: unit                                    ptr       BattleUnit
+
+# Name: Sprite.getHeight                        Args: [ptr Sprite] [var int]                            Desc: Get's the width of the sprite. (height)
+# Name: Sprite.getWidth                         Args: [ptr Sprite] [var int]                            Desc: Get's the width of the sprite. (width)
+# Name: SpriteOverlay.blit                      Args: [ptre SpriteOverlay] [ptr Sprite] [int] [int]     Desc: Blits a sprite onto the overlay. (sprite x y)
+# Name: SpriteOverlay.blitCrop                  Args: [ptre SpriteOverlay] [ptr Sprite] [int] [int] [int] [int]Desc: Blits a sprite onto the overlay with a crop. (sprite x y cropX1 cropY1 cropX2 cropY2)
+# Name: SpriteOverlay.blitShade                 Args: [ptre SpriteOverlay] [ptr Sprite] [int] [int] [int]Desc: Blits and shades a sprite onto the overlay. (sprite x y shade)
+# Name: SpriteOverlay.blitShadeRecolor          Args: [ptre SpriteOverlay] [ptr Sprite] [int] [int] [int] [int]Desc: Blits, shades, and recolors a sprite onto the overlay. (sprite x y shade color)
+# Name: SpriteOverlay.drawCirc                  Args: [ptre SpriteOverlay] [int] [int] [int] [int]      Desc: Draws a circle on the overlay. (x y radius color)
+# Name: SpriteOverlay.drawLine                  Args: [ptre SpriteOverlay] [int] [int] [int] [int] [int]Desc: Draws a line on the overlay. (x1 y1 x2 y2 color)
+# Name: SpriteOverlay.drawNumber                Args: [ptre SpriteOverlay] [int] [int] [int] [int] [int] [int]Desc: Draws number on the overlay. (number x y width height color)
+# Name: SpriteOverlay.drawRect                  Args: [ptre SpriteOverlay] [int] [int] [int] [int] [int]Desc: Draws a rectangle on the overlay. (x1 y1 x2 y2 color)
+# Name: SpriteOverlay.drawText                  Args: [ptre SpriteOverlay] [text] [int] [int] [int] [int] [int]Desc: Draws text on the overlay. (text x y width height color
+# Name: SpriteOverlay.getHeight                 Args: [ptr SpriteOverlay] [var int]                     Desc: Gets the height of this overlay.
+# Name: SpriteOverlay.getWidth                  Args: [ptr SpriteOverlay] [var int]
+
+
+
+armors:
+  - type: STR_NONE_UC
+    scripts:
+      unitPaperdollOverlay: |
+        var int x1;
+        var int y1;
+        var int x2;
+        var int y2;
+        var int diffx;
+        var int diffy;
+
+        var int color;
+        var int colorOffset;
+
+        var ptr Sprite doomface;
+        var int animationOffset;
+
+        set x1 67;
+        set y1 48;
+        set diffx 25;
+        set diffy 23;
+
+        set x2 x1;
+        add x2 diffx;
+
+        set y2 y1;
+        add y2 diffy;
+
+        ## box for orientation
+        overlay.drawLine x1 y1 x1 y2 5; # left
+        overlay.drawLine x2 y1 x2 y2 5; # right
+
+        overlay.drawLine x1 y1 x2 y1 5; # top
+        overlay.drawLine x1 y2 x2 y2 5; # bottom
+
+        # overlay.drawRect 67 48 99 70 5; # draws with filling
+
+        ## doom face # currently not used in unitRankOverlay
+        # rules.getNamedSprite doomface "doomface";
+        set animationOffset anim_frame;
+        mod animationOffset 15;
+        div animationOffset 5;
+        # someBlit is defined in extraSprites
+        rules.getSpriteFromSet doomface "someBlit" animationOffset;
+        overlay.blit doomface 70 48;
+
+        ## red eyes
+        set color 32;
+        set colorOffset anim_frame;
+        mod colorOffset 15;
+        add color colorOffset;
+        overlay.drawCirc 78 59 1 color;
+        overlay.drawCirc 82 59 1 color;
+
+        # debug_log "drawing something";
+        return;
+
+      unitRankOverlay: |
+        var int color;
+        var int colorOffset;
+
+        set color 32;
+        set colorOffset anim_frame;
+        mod colorOffset 15;
+        add color colorOffset;
+        overlay.drawCirc 11 11 1 color;
+        overlay.drawCirc 15 11 1 color;
+
+        return;

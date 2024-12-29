@@ -1,0 +1,5 @@
+soldiers:
+  - type: STR_SOLDIER
+    armorForAvatar: STR_NONE_UC
+    avatarOffsetX: 67
+    avatarOffsetY: 48

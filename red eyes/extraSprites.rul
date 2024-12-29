@@ -1,0 +1,13 @@
+extraSprites:
+  - type: AvatarBackground
+    singleImage: true
+    files:
+      0: Resources/Avatar_BG.png
+
+  - type: someBlit
+    width: 95
+    height: 115
+    subX: 18
+    subY: 22
+    files:
+      0: Resources/DoomGuyFace.png
